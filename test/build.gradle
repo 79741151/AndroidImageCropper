@@ -1,0 +1,46 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        debug8 {
+            storeFile file('D:\\AndrooidStudioProjects\\Key\\platform.jks')
+            storePassword 'android'
+            keyAlias = 'androiddebugkey'
+            keyPassword 'android'
+        }
+        release8 {
+            storeFile file('.\\signature\\platform.jks')
+            storePassword 'android'
+            keyPassword 'android'
+            keyAlias = 'androiddebugkey'
+        }
+    }
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 28
+        versionCode 1
+        versionName '1.0'
+    }
+    lintOptions {
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release8
+        }
+        debug {
+            signingConfig signingConfigs.debug8
+        }
+    }
+}
+
+dependencies {
+    api "androidx.appcompat:appcompat:$androidXLibraryVersion"
+    implementation project(":cropper")
+
+}
